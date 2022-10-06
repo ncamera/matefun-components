@@ -5,57 +5,179 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Archivo } from "./common/interfaces";
 export namespace Components {
-    interface MyComponent {
+    interface MatefunModal {
         /**
-          * The first name
+          * This attribute lets you specify the label for the close button. Important for accessibility.
          */
-        "first": string;
+        "closeButtonLabel": string;
         /**
-          * The last name
+          * This attribute lets you specify the height of the control.
          */
-        "last": string;
+        "height": string;
         /**
-          * The middle name
+          * Este atributo permite especificar si el modal está abierto o cerrado.
          */
-        "middle": string;
+        "opened": boolean;
+        /**
+          * This attribute lets you specify if a body is rendered in the middle of the modal dialog.
+         */
+        "showBody": boolean;
+        /**
+          * This attribute lets you specify if a footer is rendered at the bottom of the modal dialog.
+         */
+        "showFooter": boolean;
+        /**
+          * This attribute lets you specify if a header is rendered on top of the modal dialog.
+         */
+        "showHeader": boolean;
+        /**
+          * This attribute lets you specify the width of the control.
+         */
+        "width": string;
+    }
+    interface MatefunModalSeleccionarDirectorio {
+        /**
+          * `true` si puede navegar hacia atrás en la lista de directorios.
+         */
+        "canNavigateToBack": boolean;
+        /**
+          * Texto del label asociado al button de confirmar la creación del archivo.
+         */
+        "confirmLabel": string;
+        "fileContent": string;
+        /**
+          * Texto del label asociado al input para ingresar el nombre del nuevo archivo.
+         */
+        "fileNameLabel": string;
+        /**
+          * El título del modal.
+         */
+        "header": string;
+        "import": boolean;
+        "importLabel": string;
+        "navigateBackLabel": string;
+        /**
+          * Este atributo permite especificar si el modal está abierto o cerrado.
+         */
+        "opened": boolean;
+        /**
+          * Directorio root
+         */
+        "rootDirectory": Archivo;
     }
 }
+export interface MatefunModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMatefunModalElement;
+}
+export interface MatefunModalSeleccionarDirectorioCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMatefunModalSeleccionarDirectorioElement;
+}
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLMatefunModalElement extends Components.MatefunModal, HTMLStencilElement {
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    var HTMLMatefunModalElement: {
+        prototype: HTMLMatefunModalElement;
+        new (): HTMLMatefunModalElement;
+    };
+    interface HTMLMatefunModalSeleccionarDirectorioElement extends Components.MatefunModalSeleccionarDirectorio, HTMLStencilElement {
+    }
+    var HTMLMatefunModalSeleccionarDirectorioElement: {
+        prototype: HTMLMatefunModalSeleccionarDirectorioElement;
+        new (): HTMLMatefunModalSeleccionarDirectorioElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "matefun-modal": HTMLMatefunModalElement;
+        "matefun-modal-seleccionar-directorio": HTMLMatefunModalSeleccionarDirectorioElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
+    interface MatefunModal {
         /**
-          * The first name
+          * This attribute lets you specify the label for the close button. Important for accessibility.
          */
-        "first"?: string;
+        "closeButtonLabel"?: string;
         /**
-          * The last name
+          * This attribute lets you specify the height of the control.
          */
-        "last"?: string;
+        "height"?: string;
         /**
-          * The middle name
+          * Se dispara cuando se cierra el dialogo modal
          */
-        "middle"?: string;
+        "onClose"?: (event: MatefunModalCustomEvent<any>) => void;
+        /**
+          * Se dispara cuando se abre el dialogo modal
+         */
+        "onOpen"?: (event: MatefunModalCustomEvent<any>) => void;
+        /**
+          * Este atributo permite especificar si el modal está abierto o cerrado.
+         */
+        "opened"?: boolean;
+        /**
+          * This attribute lets you specify if a body is rendered in the middle of the modal dialog.
+         */
+        "showBody"?: boolean;
+        /**
+          * This attribute lets you specify if a footer is rendered at the bottom of the modal dialog.
+         */
+        "showFooter"?: boolean;
+        /**
+          * This attribute lets you specify if a header is rendered on top of the modal dialog.
+         */
+        "showHeader"?: boolean;
+        /**
+          * This attribute lets you specify the width of the control.
+         */
+        "width"?: string;
+    }
+    interface MatefunModalSeleccionarDirectorio {
+        /**
+          * `true` si puede navegar hacia atrás en la lista de directorios.
+         */
+        "canNavigateToBack"?: boolean;
+        /**
+          * Texto del label asociado al button de confirmar la creación del archivo.
+         */
+        "confirmLabel"?: string;
+        "fileContent"?: string;
+        /**
+          * Texto del label asociado al input para ingresar el nombre del nuevo archivo.
+         */
+        "fileNameLabel"?: string;
+        /**
+          * El título del modal.
+         */
+        "header"?: string;
+        "import"?: boolean;
+        "importLabel"?: string;
+        "navigateBackLabel"?: string;
+        /**
+          * Se dispara cuando se confirma la creación del archivo en el directorio actual.
+         */
+        "onConfirmFileCreation"?: (event: MatefunModalSeleccionarDirectorioCustomEvent<any>) => void;
+        /**
+          * Este atributo permite especificar si el modal está abierto o cerrado.
+         */
+        "opened"?: boolean;
+        /**
+          * Directorio root
+         */
+        "rootDirectory"?: Archivo;
     }
     interface IntrinsicElements {
-        "my-component": MyComponent;
+        "matefun-modal": MatefunModal;
+        "matefun-modal-seleccionar-directorio": MatefunModalSeleccionarDirectorio;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "matefun-modal": LocalJSX.MatefunModal & JSXBase.HTMLAttributes<HTMLMatefunModalElement>;
+            "matefun-modal-seleccionar-directorio": LocalJSX.MatefunModalSeleccionarDirectorio & JSXBase.HTMLAttributes<HTMLMatefunModalSeleccionarDirectorioElement>;
         }
     }
 }

@@ -1,21 +1,23 @@
-import { Config } from '@stencil/core';
+import { Config } from "@stencil/core";
+import { sass } from "@stencil/sass";
 
 export const config: Config = {
-  namespace: 'matefun-components',
+  namespace: "matefun-components",
   outputTargets: [
     {
-      type: 'dist',
-      esmLoaderPath: '../loader',
+      type: "dist",
+      esmLoaderPath: "../loader"
     },
     {
-      type: 'dist-custom-elements',
+      type: "dist-custom-elements"
     },
     {
-      type: 'docs-readme',
+      type: "docs-readme"
     },
     {
-      type: 'www',
-      serviceWorker: null, // disable service workers
-    },
+      type: "www",
+      serviceWorker: null // disable service workers
+    }
   ],
+  plugins: [sass()]
 };

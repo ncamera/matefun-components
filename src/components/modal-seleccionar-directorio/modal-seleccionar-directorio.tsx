@@ -16,6 +16,8 @@ import { Archivo } from "../../common/interfaces";
   shadow: false
 })
 export class ModalSeleccionarDirectorio {
+  private currentPath = "/";
+
   private fileNameToAdd: string = "";
 
   /**
@@ -24,36 +26,11 @@ export class ModalSeleccionarDirectorio {
   @State() fileNameIsEmpty: boolean = true;
 
   /**
-   * Directorio actual sobre el cual se quiere agregar el archivo
-   */
-  @State() currentDirectory: Archivo = null;
-
-  /**
-   * `true` si puede navegar hacia atrás en la lista de directorios.
-   */
-  @Prop() canNavigateToBack: boolean;
-
-  /**
    * Texto del label asociado al button de confirmar la creación del archivo.
    */
   @Prop() confirmLabel: string;
 
   @Prop() fileContent: string;
-
-  /**
-   * El título del modal.
-   */
-  @Prop() header: string;
-
-  /**
-   * Este atributo permite especificar si el modal está abierto o cerrado.
-   */
-  @Prop() opened = false;
-
-  /**
-   * Directorio root
-   */
-  @Prop() rootDirectory: Archivo = null;
 
   /**
    * Texto del label asociado al input para ingresar el nombre del nuevo archivo.
@@ -64,12 +41,40 @@ export class ModalSeleccionarDirectorio {
 
   @Prop() importLabel: string;
 
+  /**
+   * Texto asociado al botón de navegar hacia atrás.
+   */
   @Prop() navigateBackLabel: string;
 
   /**
-   *  Se dispara cuando se confirma la creación del archivo en el directorio actual.
+   * El título del modal.
+   */
+  @Prop() header: string;
+
+  /**
+   * `true` si el modal está abierto.
+   */
+  @Prop() opened = false;
+
+  /**
+   * Directorio root sobre el cual se están visualizando sus archivos.
+   */
+  @Prop() rootDirectory: Archivo = null;
+
+  /**
+   * Se dispara cuando se confirma la creación del archivo en el directorio actual.
    */
   @Event() confirmFileCreation: EventEmitter<any>;
+
+  /**
+   * Se dispara cuando se quiere navegar hacia un subdirectorio.
+   */
+  @Event() navTo: EventEmitter<any>;
+
+  /**
+   * Se dispara cuando se quiere navegar hacia el directorio padre.
+   */
+  @Event() navBack: EventEmitter<any>;
 
   /**
    * Navega hacia el directorio `file`.
@@ -77,12 +82,20 @@ export class ModalSeleccionarDirectorio {
    */
   private navigateToDirectory = (file: Archivo) => (event: MouseEvent) => {
     event.stopPropagation();
+    this.navTo.emit(file);
 
-    this.currentDirectory = file;
+    this.currentPath += `${file.nombre}/`;
   };
 
   private navigateBack = (event: MouseEvent) => {
     event.stopPropagation();
+    this.navBack.emit(this.rootDirectory);
+
+    const lastDirectoryIndex = this.currentPath.lastIndexOf(
+      `${this.rootDirectory.nombre}`
+    );
+
+    this.currentPath = this.currentPath.substring(0, lastDirectoryIndex);
   };
 
   /**
@@ -104,7 +117,7 @@ export class ModalSeleccionarDirectorio {
   private confirmFile = () => {
     this.confirmFileCreation.emit({
       nombre: this.fileNameToAdd,
-      padreId: this.currentDirectory.id
+      padreId: this.rootDirectory.id
     });
   };
 
@@ -112,33 +125,36 @@ export class ModalSeleccionarDirectorio {
     return file.directorio;
   };
 
-  componentWillRender() {
-    this.currentDirectory = this.rootDirectory;
-  }
-
   render() {
+    const canNavigateBack = this.rootDirectory.padreId != -1;
+
     return (
       <Host>
         <matefun-modal opened={this.opened}>
           <span slot="header">{this.header}</span>
 
           <div slot="body" class="stretch-width">
-            <label htmlfor="file-name" class="form-control-label">
-              {this.fileNameLabel}:
-            </label>
-            <input
-              id="file-name"
-              type="text"
-              class="form-control"
-              value=""
-              onInput={this.updateFileName}
-            />
+            <div class="form-group">
+              <label htmlfor="file-name" class="form-control-label">
+                {this.fileNameLabel}
+              </label>
+              <input
+                id="file-name"
+                type="text"
+                class="form-control"
+                value=""
+                onInput={this.updateFileName}
+              />
+            </div>
+
+            <h6 class="current-directory">{this.currentPath}</h6>
 
             <div class="list-group">
-              {this.currentDirectory.archivos
+              {this.rootDirectory.archivos
                 .filter(this.esDirectorio)
-                .forEach((file: Archivo) => (
+                .map((file: Archivo) => (
                   <button
+                    key={file.id} // Necesario para evitar optimizaciones no deseadas de StencilJS
                     type="button"
                     class="list-group-item list-group-item-action"
                     onClick={this.navigateToDirectory(file)}
@@ -160,7 +176,7 @@ export class ModalSeleccionarDirectorio {
             {this.import && (
               <div class="form-group">
                 <label htmlFor="file-name" class="form-control-label">
-                  {this.importLabel}:
+                  {this.importLabel}
                 </label>
                 <input
                   id="fileid"
@@ -171,17 +187,6 @@ export class ModalSeleccionarDirectorio {
               </div>
             )}
           </div>
-
-          {this.canNavigateToBack && (
-            <button
-              slot="secondary-action"
-              type="button"
-              class="btn btn-default"
-              onClick={this.navigateBack}
-            >
-              {this.navigateBackLabel}
-            </button>
-          )}
 
           <button
             slot="primary-action"
@@ -194,6 +199,17 @@ export class ModalSeleccionarDirectorio {
           >
             {this.confirmLabel}
           </button>
+
+          {canNavigateBack && (
+            <button
+              slot="secondary-action"
+              type="button"
+              class="btn btn-default"
+              onClick={this.navigateBack}
+            >
+              {this.navigateBackLabel}
+            </button>
+          )}
         </matefun-modal>
       </Host>
     );

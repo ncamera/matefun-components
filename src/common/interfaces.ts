@@ -8,7 +8,12 @@ export interface Evaluacion {
 
 export interface Archivo {
   id: number;
+
+  archivos: Archivo[];
+  archivoOrigenId: number;
+  cedulaCreador: string;
   contenido: string;
+
   /**
    * `true` si el archivo actual es un directorio
    */
@@ -19,17 +24,14 @@ export interface Archivo {
    */
   editable: boolean;
 
-  nombre: string;
+  eliminado: boolean;
+  estado: string;
+  evaluacion: Evaluacion;
   fechaCreacion: Date;
-  cedulaCreador: string;
+  nombre: string;
 
   /**
    * ID del directorio padre. -1 si no tiene directorio padre
    */
   padreId: number;
-  archivoOrigenId: number;
-  archivos: Archivo[];
-  estado: string;
-  eliminado: boolean;
-  evaluacion: Evaluacion;
 }

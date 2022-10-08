@@ -37,11 +37,33 @@ export namespace Components {
          */
         "width": string;
     }
-    interface MatefunModalSeleccionarDirectorio {
+    interface MatefunModalNuevoArchivo {
         /**
-          * `true` si puede navegar hacia atrás en la lista de directorios.
+          * Texto del label asociado al button de confirmar la creación del archivo.
          */
-        "canNavigateToBack": boolean;
+        "confirmLabel": string;
+        /**
+          * Texto del label asociado al input para ingresar la descripción del nuevo archivo.
+         */
+        "fileDescriptionLabel": string;
+        /**
+          * Texto del label asociado al input para ingresar el nombre del nuevo archivo.
+         */
+        "fileNameLabel": string;
+        /**
+          * El título del modal.
+         */
+        "header": string;
+        /**
+          * `true` si el modal está abierto.
+         */
+        "opened": boolean;
+        /**
+          * Determina si el archivo a agregar es un directorio o un archivo.
+         */
+        "typeOfFile": "directory" | "file";
+    }
+    interface MatefunModalSeleccionarDirectorio {
         /**
           * Texto del label asociado al button de confirmar la creación del archivo.
          */
@@ -57,13 +79,16 @@ export namespace Components {
         "header": string;
         "import": boolean;
         "importLabel": string;
+        /**
+          * Texto asociado al botón de navegar hacia atrás.
+         */
         "navigateBackLabel": string;
         /**
-          * Este atributo permite especificar si el modal está abierto o cerrado.
+          * `true` si el modal está abierto.
          */
         "opened": boolean;
         /**
-          * Directorio root
+          * Directorio root sobre el cual se están visualizando sus archivos.
          */
         "rootDirectory": Archivo;
     }
@@ -71,6 +96,10 @@ export namespace Components {
 export interface MatefunModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMatefunModalElement;
+}
+export interface MatefunModalNuevoArchivoCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMatefunModalNuevoArchivoElement;
 }
 export interface MatefunModalSeleccionarDirectorioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -83,6 +112,12 @@ declare global {
         prototype: HTMLMatefunModalElement;
         new (): HTMLMatefunModalElement;
     };
+    interface HTMLMatefunModalNuevoArchivoElement extends Components.MatefunModalNuevoArchivo, HTMLStencilElement {
+    }
+    var HTMLMatefunModalNuevoArchivoElement: {
+        prototype: HTMLMatefunModalNuevoArchivoElement;
+        new (): HTMLMatefunModalNuevoArchivoElement;
+    };
     interface HTMLMatefunModalSeleccionarDirectorioElement extends Components.MatefunModalSeleccionarDirectorio, HTMLStencilElement {
     }
     var HTMLMatefunModalSeleccionarDirectorioElement: {
@@ -91,6 +126,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "matefun-modal": HTMLMatefunModalElement;
+        "matefun-modal-nuevo-archivo": HTMLMatefunModalNuevoArchivoElement;
         "matefun-modal-seleccionar-directorio": HTMLMatefunModalSeleccionarDirectorioElement;
     }
 }
@@ -133,11 +169,37 @@ declare namespace LocalJSX {
          */
         "width"?: string;
     }
-    interface MatefunModalSeleccionarDirectorio {
+    interface MatefunModalNuevoArchivo {
         /**
-          * `true` si puede navegar hacia atrás en la lista de directorios.
+          * Texto del label asociado al button de confirmar la creación del archivo.
          */
-        "canNavigateToBack"?: boolean;
+        "confirmLabel"?: string;
+        /**
+          * Texto del label asociado al input para ingresar la descripción del nuevo archivo.
+         */
+        "fileDescriptionLabel"?: string;
+        /**
+          * Texto del label asociado al input para ingresar el nombre del nuevo archivo.
+         */
+        "fileNameLabel"?: string;
+        /**
+          * El título del modal.
+         */
+        "header"?: string;
+        /**
+          * Se dispara cuando se confirma la creación del archivo en el directorio actual.
+         */
+        "onConfirmFileCreation"?: (event: MatefunModalNuevoArchivoCustomEvent<any>) => void;
+        /**
+          * `true` si el modal está abierto.
+         */
+        "opened"?: boolean;
+        /**
+          * Determina si el archivo a agregar es un directorio o un archivo.
+         */
+        "typeOfFile"?: "directory" | "file";
+    }
+    interface MatefunModalSeleccionarDirectorio {
         /**
           * Texto del label asociado al button de confirmar la creación del archivo.
          */
@@ -153,22 +215,34 @@ declare namespace LocalJSX {
         "header"?: string;
         "import"?: boolean;
         "importLabel"?: string;
+        /**
+          * Texto asociado al botón de navegar hacia atrás.
+         */
         "navigateBackLabel"?: string;
         /**
           * Se dispara cuando se confirma la creación del archivo en el directorio actual.
          */
         "onConfirmFileCreation"?: (event: MatefunModalSeleccionarDirectorioCustomEvent<any>) => void;
         /**
-          * Este atributo permite especificar si el modal está abierto o cerrado.
+          * Se dispara cuando se quiere navegar hacia el directorio padre.
+         */
+        "onNavBack"?: (event: MatefunModalSeleccionarDirectorioCustomEvent<any>) => void;
+        /**
+          * Se dispara cuando se quiere navegar hacia un subdirectorio.
+         */
+        "onNavTo"?: (event: MatefunModalSeleccionarDirectorioCustomEvent<any>) => void;
+        /**
+          * `true` si el modal está abierto.
          */
         "opened"?: boolean;
         /**
-          * Directorio root
+          * Directorio root sobre el cual se están visualizando sus archivos.
          */
         "rootDirectory"?: Archivo;
     }
     interface IntrinsicElements {
         "matefun-modal": MatefunModal;
+        "matefun-modal-nuevo-archivo": MatefunModalNuevoArchivo;
         "matefun-modal-seleccionar-directorio": MatefunModalSeleccionarDirectorio;
     }
 }
@@ -177,6 +251,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "matefun-modal": LocalJSX.MatefunModal & JSXBase.HTMLAttributes<HTMLMatefunModalElement>;
+            "matefun-modal-nuevo-archivo": LocalJSX.MatefunModalNuevoArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalNuevoArchivoElement>;
             "matefun-modal-seleccionar-directorio": LocalJSX.MatefunModalSeleccionarDirectorio & JSXBase.HTMLAttributes<HTMLMatefunModalSeleccionarDirectorioElement>;
         }
     }

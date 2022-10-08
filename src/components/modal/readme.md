@@ -41,11 +41,13 @@
 
 ### Used by
 
+ - [matefun-modal-nuevo-archivo](../modal-nuevo-archivo)
  - [matefun-modal-seleccionar-directorio](../modal-seleccionar-directorio)
 
 ### Graph
 ```mermaid
 graph TD;
+  matefun-modal-nuevo-archivo --> matefun-modal
   matefun-modal-seleccionar-directorio --> matefun-modal
   style matefun-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```

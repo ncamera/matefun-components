@@ -26,7 +26,7 @@ export class Modal {
   /**
    * This attribute lets you specify the label for the close button. Important for accessibility.
    */
-  @Prop() readonly closeButtonLabel: string;
+  @Prop() readonly closeButtonLabel: string = "Cerrar diálogo";
 
   /**
    * This attribute lets you specify the height of the control.

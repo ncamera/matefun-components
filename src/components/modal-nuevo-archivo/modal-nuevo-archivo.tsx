@@ -13,7 +13,7 @@ import {
   styleUrl: "modal-nuevo-archivo.scss",
   shadow: false
 })
-export class ModalSeleccionarDirectorio {
+export class ModalNuevoArchivo {
   private fileNameToAdd: string = "";
 
   private fileDescriptionToAdd: string = "";

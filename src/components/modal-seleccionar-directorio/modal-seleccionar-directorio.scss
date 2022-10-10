@@ -14,12 +14,19 @@ matefun-modal-seleccionar-directorio {
     border-radius: 4px;
     padding: 4px;
     opacity: 0.75;
-    word-break: keep-all;
+    word-break: break-word;
   }
 
   .matefun-file {
     cursor: pointer;
     font-size: 3em;
     margin-right: 10px;
+  }
+
+  // Hace que el contenido del directorio (las carpetas) sean "scrolleables"
+  // cuando el modal no tiene suficiente height para mostrar todo el contenido
+  .scroll-on-overflow {
+    max-height: calc(100vh - 386px);
+    overflow: auto;
   }
 }

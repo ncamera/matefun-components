@@ -149,7 +149,7 @@ export class ModalSeleccionarDirectorio {
 
             <h6 class="current-directory">{this.currentPath}</h6>
 
-            <div class="list-group">
+            <div class="list-group scroll-on-overflow">
               {this.rootDirectory.archivos
                 .filter(this.esDirectorio)
                 .map((file: Archivo) => (

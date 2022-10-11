@@ -9,7 +9,7 @@
 
 | Property          | Attribute          | Description                                                                | Type      | Default     |
 | ----------------- | ------------------ | -------------------------------------------------------------------------- | --------- | ----------- |
-| `bodyDescription` | `body-description` | Texto del descriptivo del mensaje del body.                                | `string`  | `undefined` |
+| `bodyDescription` | `body-description` | Texto descriptivo del mensaje del body.                                    | `string`  | `undefined` |
 | `cancelLabel`     | `cancel-label`     | Texto del label asociado al button de cancelar la eliminación del archivo. | `string`  | `undefined` |
 | `confirmLabel`    | `confirm-label`    | Texto del label asociado al button de confirmar la creación del archivo.   | `string`  | `undefined` |
 | `header`          | `header`           | El título del modal.                                                       | `string`  | `undefined` |

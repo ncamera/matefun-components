@@ -5,7 +5,7 @@ button {
 matefun-modal-seleccionar-directorio {
   .stretch-width {
     width: 100%;
-    min-height: 184px; // Para evitar un poco el CLS se fija un min-height
+    min-height: 275px; // Para evitar un poco el CLS se fija un min-height
   }
 
   .current-directory {
@@ -22,12 +22,5 @@ matefun-modal-seleccionar-directorio {
     cursor: pointer;
     font-size: 3em;
     margin-right: 10px;
-  }
-
-  // Hace que el contenido del directorio (las carpetas) sean "scrolleables"
-  // cuando el modal no tiene suficiente height para mostrar todo el contenido
-  .scroll-on-overflow {
-    max-height: calc(100vh - 386px);
-    overflow: auto;
   }
 }

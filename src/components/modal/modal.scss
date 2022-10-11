@@ -7,6 +7,7 @@ $background-color: #fff;
 $font-color: #292b2c;
 $padding-in-slot: 16px;
 $width: 500px;
+$translateY: 100px;
 
 // Mask
 $mask-background-color: #888888bf;
@@ -54,7 +55,7 @@ $transition-duration: 0.3s;
   & > .matefun-modal-dialog {
     // Valores por default cuando la animación empieza
     opacity: 1;
-    transform: translateY(100px);
+    transform: translateY($translateY);
 
     animation: dismiss-dialog $transition-duration ease-in-out forwards;
   }
@@ -66,6 +67,11 @@ $transition-duration: 0.3s;
   border-radius: 10px;
   box-shadow: 0 10px 20px #00000040, inset 0 0 6px -3px #00000040;
   width: $width;
+
+  // Hace que el contenido del moda sea "scrolleables" cuando el mismo no tiene
+  // suficiente height para mostrar todo el contenido
+  max-height: calc(100vh - $translateY);
+  overflow: auto;
 
   // Valores por default cuando la animación empieza
   opacity: 0;
@@ -164,7 +170,7 @@ h6 {
 
   100% {
     opacity: 1;
-    transform: translateY(100px);
+    transform: translateY($translateY);
   }
 }
 

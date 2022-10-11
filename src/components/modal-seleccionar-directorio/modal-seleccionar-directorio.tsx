@@ -30,6 +30,11 @@ export class ModalSeleccionarDirectorio {
    */
   @Prop() confirmLabel: string;
 
+  /**
+   * Path (ruta) inicial en donde se encuentra el directorio indicado por la propiedad `rootDirectory`.
+   */
+  @Prop() initialPath: string = "/";
+
   @Prop() fileContent: string;
 
   /**
@@ -50,6 +55,17 @@ export class ModalSeleccionarDirectorio {
    * El título del modal.
    */
   @Prop() header: string;
+
+  /**
+   * Determina la funcionalidad final del modal.
+   *  * `"add"`: Modal para agregar un archivo. Permite recorrer el árbol de
+   *    directorios y muestra un dialogo adicional para especificar el nombre
+   *    del archivo a agregar.
+   *
+   *  * `"move"`: Modal para mover un archivo/carpeta. Solo se permte recorrer
+   *    el árbol de directorios.
+   */
+  @Prop() typeOfModal: "add" | "move" = "add";
 
   /**
    * `true` si el modal está abierto.
@@ -89,13 +105,13 @@ export class ModalSeleccionarDirectorio {
 
   private navigateBack = (event: MouseEvent) => {
     event.stopPropagation();
-    this.navBack.emit(this.rootDirectory);
 
     const lastDirectoryIndex = this.currentPath.lastIndexOf(
       `${this.rootDirectory.nombre}`
     );
-
     this.currentPath = this.currentPath.substring(0, lastDirectoryIndex);
+
+    this.navBack.emit(this.rootDirectory);
   };
 
   /**
@@ -125,6 +141,10 @@ export class ModalSeleccionarDirectorio {
     return file.directorio;
   };
 
+  componentWillLoad() {
+    this.currentPath = this.initialPath;
+  }
+
   render() {
     const canNavigateBack = this.rootDirectory.padreId != -1;
 
@@ -134,18 +154,20 @@ export class ModalSeleccionarDirectorio {
           <span slot="header">{this.header}</span>
 
           <div slot="body" class="stretch-width">
-            <div class="form-group">
-              <label htmlfor="file-name" class="form-control-label">
-                {this.fileNameLabel}
-              </label>
-              <input
-                id="file-name"
-                type="text"
-                class="form-control"
-                value=""
-                onInput={this.updateFileName}
-              />
-            </div>
+            {this.typeOfModal == "add" && (
+              <div class="form-group">
+                <label htmlfor="file-name" class="form-control-label">
+                  {this.fileNameLabel}
+                </label>
+                <input
+                  id="file-name"
+                  type="text"
+                  class="form-control"
+                  value=""
+                  onInput={this.updateFileName}
+                />
+              </div>
+            )}
 
             <h6 class="current-directory">{this.currentPath}</h6>
 

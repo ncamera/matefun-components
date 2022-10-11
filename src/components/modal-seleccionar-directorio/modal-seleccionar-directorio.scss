@@ -5,6 +5,7 @@ button {
 matefun-modal-seleccionar-directorio {
   .stretch-width {
     width: 100%;
+    min-height: 184px; // Para evitar un poco el CLS se fija un min-height
   }
 
   .current-directory {

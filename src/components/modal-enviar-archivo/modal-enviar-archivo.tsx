@@ -74,16 +74,16 @@ export class ModalEnviarArchivo {
           </div>
 
           <button
-            slot="primary-action"
+            slot="secondary-action"
             type="button"
-            class="btn btn-success"
+            class="btn btn-primary"
             onClick={this.sendFile}
           >
             {this.confirmLabel}
           </button>
 
           <button
-            slot="secondary-action"
+            slot="primary-action"
             type="button"
             class="btn btn-default"
             onClick={this.cancel}

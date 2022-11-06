@@ -134,6 +134,10 @@ export namespace Components {
           * Texto del label asociado al button de confirmar la creación del archivo.
          */
         "confirmLabel": string;
+        /**
+          * Directorio actual sobre el cual se están visualizando sus archivos.
+         */
+        "currentDirectory": Archivo;
         "fileContent": string;
         /**
           * Id del archivo a mover. Esta propiedad solo aplica cuando `typeOfModal` == `"move"`, y permite evitar mover una carpeta para algunos de sus subdirectorios, evitando así un ciclo en el árbol de directorios.
@@ -150,7 +154,7 @@ export namespace Components {
         "import": boolean;
         "importLabel": string;
         /**
-          * Path (ruta) inicial en donde se encuentra el directorio indicado por la propiedad `rootDirectory`.
+          * Path (ruta) inicial en donde se encuentra el directorio indicado por la propiedad `currentDirectory`.
          */
         "initialPath": string;
         /**
@@ -161,10 +165,6 @@ export namespace Components {
           * `true` si el modal está abierto.
          */
         "opened": boolean;
-        /**
-          * Directorio root sobre el cual se están visualizando sus archivos.
-         */
-        "rootDirectory": Archivo;
         /**
           * Determina la funcionalidad final del modal.  * `"add"`: Modal para agregar un archivo. Permite recorrer el árbol de    directorios y muestra un dialogo adicional para especificar el nombre    del archivo a agregar.   * `"move"`: Modal para mover un archivo/carpeta. Solo se permte recorrer    el árbol de directorios.
          */
@@ -401,6 +401,10 @@ declare namespace LocalJSX {
           * Texto del label asociado al button de confirmar la creación del archivo.
          */
         "confirmLabel"?: string;
+        /**
+          * Directorio actual sobre el cual se están visualizando sus archivos.
+         */
+        "currentDirectory"?: Archivo;
         "fileContent"?: string;
         /**
           * Id del archivo a mover. Esta propiedad solo aplica cuando `typeOfModal` == `"move"`, y permite evitar mover una carpeta para algunos de sus subdirectorios, evitando así un ciclo en el árbol de directorios.
@@ -417,7 +421,7 @@ declare namespace LocalJSX {
         "import"?: boolean;
         "importLabel"?: string;
         /**
-          * Path (ruta) inicial en donde se encuentra el directorio indicado por la propiedad `rootDirectory`.
+          * Path (ruta) inicial en donde se encuentra el directorio indicado por la propiedad `currentDirectory`.
          */
         "initialPath"?: string;
         /**
@@ -440,10 +444,6 @@ declare namespace LocalJSX {
           * `true` si el modal está abierto.
          */
         "opened"?: boolean;
-        /**
-          * Directorio root sobre el cual se están visualizando sus archivos.
-         */
-        "rootDirectory"?: Archivo;
         /**
           * Determina la funcionalidad final del modal.  * `"add"`: Modal para agregar un archivo. Permite recorrer el árbol de    directorios y muestra un dialogo adicional para especificar el nombre    del archivo a agregar.   * `"move"`: Modal para mover un archivo/carpeta. Solo se permte recorrer    el árbol de directorios.
          */

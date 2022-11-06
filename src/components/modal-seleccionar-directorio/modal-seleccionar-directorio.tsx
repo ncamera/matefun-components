@@ -31,7 +31,12 @@ export class ModalSeleccionarDirectorio {
   @Prop() confirmLabel: string;
 
   /**
-   * Path (ruta) inicial en donde se encuentra el directorio indicado por la propiedad `rootDirectory`.
+   * Directorio actual sobre el cual se están visualizando sus archivos.
+   */
+  @Prop() currentDirectory: Archivo = null;
+
+  /**
+   * Path (ruta) inicial en donde se encuentra el directorio indicado por la propiedad `currentDirectory`.
    */
   @Prop() initialPath: string = "/";
 
@@ -80,11 +85,6 @@ export class ModalSeleccionarDirectorio {
   @Prop() opened = false;
 
   /**
-   * Directorio root sobre el cual se están visualizando sus archivos.
-   */
-  @Prop() rootDirectory: Archivo = null;
-
-  /**
    * Se dispara cuando se confirma la operación de crear o mover el archivo
    * sobre el directorio actual.
    */
@@ -115,11 +115,11 @@ export class ModalSeleccionarDirectorio {
     event.stopPropagation();
 
     const lastDirectoryIndex = this.currentPath.lastIndexOf(
-      `${this.rootDirectory.nombre}`
+      `${this.currentDirectory.nombre}`
     );
     this.currentPath = this.currentPath.substring(0, lastDirectoryIndex);
 
-    this.navBack.emit(this.rootDirectory);
+    this.navBack.emit(this.currentDirectory);
   };
 
   /**
@@ -146,10 +146,10 @@ export class ModalSeleccionarDirectorio {
       this.typeOfModal == "add"
         ? {
             nombre: this.fileNameToAdd,
-            padreId: this.rootDirectory.id
+            padreId: this.currentDirectory.id
           }
         : {
-            padreId: this.rootDirectory.id
+            padreId: this.currentDirectory.id
           };
 
     this.confirmFileCreation.emit(detail);
@@ -163,7 +163,7 @@ export class ModalSeleccionarDirectorio {
   }
 
   render() {
-    const canNavigateBack = this.rootDirectory.padreId != -1;
+    const canNavigateBack = this.currentDirectory.padreId != -1;
 
     return (
       <Host>
@@ -189,7 +189,7 @@ export class ModalSeleccionarDirectorio {
             <h6 class="current-directory">{this.currentPath}</h6>
 
             <div class="list-group scroll-on-overflow">
-              {this.rootDirectory.archivos
+              {this.currentDirectory.archivos
                 .filter(this.esDirectorio)
                 .map((file: Archivo) => (
                   <button

@@ -1,6 +1,6 @@
 // Close button
 $close-vector-size: 14px;
-$close-button-size: $close-vector-size + 10px;
+$close-button-size: $close-vector-size + 24px;
 
 // Main modal
 $background-color: #fff;
@@ -96,8 +96,8 @@ $transition-duration: 0.3s;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #cfe8e8;
-  min-height: 3em;
-  padding: $padding-in-slot;
+  min-height: 3.5em;
+  padding: 0 $padding-in-slot;
 }
 
 h6 {
@@ -119,7 +119,8 @@ h6 {
   outline: unset;
   width: $close-button-size;
   height: $close-button-size;
-  transform: translateX(4px);
+  transform: translateX(10px);
+  transition: background-color $transition-duration;
 
   & > svg {
     width: $close-vector-size;
@@ -130,16 +131,15 @@ h6 {
       stroke-width: 2px;
       stroke-linecap: round;
       stroke-linejoin: round;
-      transition: filter $transition-duration;
     }
   }
 
-  &:active > svg > .vector {
-    filter: invert(0.5);
+  &:active {
+    background-color: #ddd;
   }
 
-  &:hover:not(:active) > svg > .vector {
-    filter: invert(0.25);
+  &:hover:not(:active) {
+    background-color: #eee;
   }
 }
 

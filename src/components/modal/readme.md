@@ -43,6 +43,7 @@
 
  - [matefun-modal-borrar-archivo](../modal-borrar-archivo)
  - [matefun-modal-compartir-archivo](../modal-compartir-archivo)
+ - [matefun-modal-enviar-archivo](../modal-enviar-archivo)
  - [matefun-modal-nuevo-archivo](../modal-nuevo-archivo)
  - [matefun-modal-seleccionar-directorio](../modal-seleccionar-directorio)
 
@@ -51,6 +52,7 @@
 graph TD;
   matefun-modal-borrar-archivo --> matefun-modal
   matefun-modal-compartir-archivo --> matefun-modal
+  matefun-modal-enviar-archivo --> matefun-modal
   matefun-modal-nuevo-archivo --> matefun-modal
   matefun-modal-seleccionar-directorio --> matefun-modal
   style matefun-modal fill:#f9f,stroke:#333,stroke-width:4px

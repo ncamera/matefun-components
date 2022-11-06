@@ -61,13 +61,35 @@ export namespace Components {
     }
     interface MatefunModalCompartirArchivo {
         /**
-          * Texto del label asociado al button de confirmar la creación del archivo.
+          * Texto del label asociado al button de confirmar la operación de compartir el archivo.
          */
         "confirmLabel": string;
         /**
           * Grupos a los cuales se les puede compartir el archivo selecciondo.
          */
         "groups": Grupo[];
+        /**
+          * El título del modal.
+         */
+        "header": string;
+        /**
+          * `true` si el modal está abierto.
+         */
+        "opened": boolean;
+    }
+    interface MatefunModalEnviarArchivo {
+        /**
+          * Texto descriptivo del mensaje del body.
+         */
+        "bodyDescription": string;
+        /**
+          * Texto del label asociado al button de cancelar el envío del archivo.
+         */
+        "cancelLabel": string;
+        /**
+          * Texto del label asociado al button de confirmar el envío del archivo.
+         */
+        "confirmLabel": string;
         /**
           * El título del modal.
          */
@@ -157,6 +179,10 @@ export interface MatefunModalCompartirArchivoCustomEvent<T> extends CustomEvent<
     detail: T;
     target: HTMLMatefunModalCompartirArchivoElement;
 }
+export interface MatefunModalEnviarArchivoCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMatefunModalEnviarArchivoElement;
+}
 export interface MatefunModalNuevoArchivoCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMatefunModalNuevoArchivoElement;
@@ -184,6 +210,12 @@ declare global {
         prototype: HTMLMatefunModalCompartirArchivoElement;
         new (): HTMLMatefunModalCompartirArchivoElement;
     };
+    interface HTMLMatefunModalEnviarArchivoElement extends Components.MatefunModalEnviarArchivo, HTMLStencilElement {
+    }
+    var HTMLMatefunModalEnviarArchivoElement: {
+        prototype: HTMLMatefunModalEnviarArchivoElement;
+        new (): HTMLMatefunModalEnviarArchivoElement;
+    };
     interface HTMLMatefunModalNuevoArchivoElement extends Components.MatefunModalNuevoArchivo, HTMLStencilElement {
     }
     var HTMLMatefunModalNuevoArchivoElement: {
@@ -200,6 +232,7 @@ declare global {
         "matefun-modal": HTMLMatefunModalElement;
         "matefun-modal-borrar-archivo": HTMLMatefunModalBorrarArchivoElement;
         "matefun-modal-compartir-archivo": HTMLMatefunModalCompartirArchivoElement;
+        "matefun-modal-enviar-archivo": HTMLMatefunModalEnviarArchivoElement;
         "matefun-modal-nuevo-archivo": HTMLMatefunModalNuevoArchivoElement;
         "matefun-modal-seleccionar-directorio": HTMLMatefunModalSeleccionarDirectorioElement;
     }
@@ -275,7 +308,7 @@ declare namespace LocalJSX {
     }
     interface MatefunModalCompartirArchivo {
         /**
-          * Texto del label asociado al button de confirmar la creación del archivo.
+          * Texto del label asociado al button de confirmar la operación de compartir el archivo.
          */
         "confirmLabel"?: string;
         /**
@@ -289,7 +322,37 @@ declare namespace LocalJSX {
         /**
           * Se dispara cuando se confirma la operación de compartir el archivo con el grupo seleccionado.
          */
-        "onConfirmFileShare"?: (event: MatefunModalCompartirArchivoCustomEvent<any>) => void;
+        "onConfirmFileShare"?: (event: MatefunModalCompartirArchivoCustomEvent<Grupo>) => void;
+        /**
+          * `true` si el modal está abierto.
+         */
+        "opened"?: boolean;
+    }
+    interface MatefunModalEnviarArchivo {
+        /**
+          * Texto descriptivo del mensaje del body.
+         */
+        "bodyDescription"?: string;
+        /**
+          * Texto del label asociado al button de cancelar el envío del archivo.
+         */
+        "cancelLabel"?: string;
+        /**
+          * Texto del label asociado al button de confirmar el envío del archivo.
+         */
+        "confirmLabel"?: string;
+        /**
+          * El título del modal.
+         */
+        "header"?: string;
+        /**
+          * Se dispara cuando se cancela el envío del archivo.
+         */
+        "onCancelAction"?: (event: MatefunModalEnviarArchivoCustomEvent<any>) => void;
+        /**
+          * Se dispara cuando se confirma el envío del archivo.
+         */
+        "onConfirmFileSend"?: (event: MatefunModalEnviarArchivoCustomEvent<any>) => void;
         /**
           * `true` si el modal está abierto.
          */
@@ -382,6 +445,7 @@ declare namespace LocalJSX {
         "matefun-modal": MatefunModal;
         "matefun-modal-borrar-archivo": MatefunModalBorrarArchivo;
         "matefun-modal-compartir-archivo": MatefunModalCompartirArchivo;
+        "matefun-modal-enviar-archivo": MatefunModalEnviarArchivo;
         "matefun-modal-nuevo-archivo": MatefunModalNuevoArchivo;
         "matefun-modal-seleccionar-directorio": MatefunModalSeleccionarDirectorio;
     }
@@ -393,6 +457,7 @@ declare module "@stencil/core" {
             "matefun-modal": LocalJSX.MatefunModal & JSXBase.HTMLAttributes<HTMLMatefunModalElement>;
             "matefun-modal-borrar-archivo": LocalJSX.MatefunModalBorrarArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalBorrarArchivoElement>;
             "matefun-modal-compartir-archivo": LocalJSX.MatefunModalCompartirArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalCompartirArchivoElement>;
+            "matefun-modal-enviar-archivo": LocalJSX.MatefunModalEnviarArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalEnviarArchivoElement>;
             "matefun-modal-nuevo-archivo": LocalJSX.MatefunModalNuevoArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalNuevoArchivoElement>;
             "matefun-modal-seleccionar-directorio": LocalJSX.MatefunModalSeleccionarDirectorio & JSXBase.HTMLAttributes<HTMLMatefunModalSeleccionarDirectorioElement>;
         }

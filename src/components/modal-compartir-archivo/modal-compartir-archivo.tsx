@@ -25,12 +25,18 @@ const getGroupId = (group: Grupo) =>
 })
 export class ModalCompartirArchivo {
   /**
+   * Grupo seleccionado para compartir el archivo
+   */
+  private selectedGroup: Grupo;
+
+  /**
    * Id del grupo seleccionado para compartir el archivo
    */
   @State() selectedGroupId: string = "";
 
   /**
-   * Texto del label asociado al button de confirmar la creación del archivo.
+   * Texto del label asociado al button de confirmar la operación de compartir
+   * el archivo.
    */
   @Prop() confirmLabel: string;
 
@@ -53,16 +59,15 @@ export class ModalCompartirArchivo {
    * Se dispara cuando se confirma la operación de compartir el archivo con
    * el grupo seleccionado.
    */
-  @Event() confirmFileShare: EventEmitter<any>;
+  @Event() confirmFileShare: EventEmitter<Grupo>;
 
   private confirmFile = () => {
-    const detail = undefined;
-
-    this.confirmFileShare.emit(detail);
+    this.confirmFileShare.emit(this.selectedGroup);
   };
 
   private updateSelectedGroup = (group: Grupo) => () => {
     this.selectedGroupId = getGroupId(group);
+    this.selectedGroup = group;
   };
 
   render() {

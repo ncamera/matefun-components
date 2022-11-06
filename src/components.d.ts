@@ -79,9 +79,13 @@ export namespace Components {
     }
     interface MatefunModalEnviarArchivo {
         /**
-          * Texto descriptivo del mensaje del body.
+          * Texto descriptivo del mensaje del body que va en la parte inferior del mismo.
          */
-        "bodyDescription": string;
+        "bodyDescriptionBottom": string;
+        /**
+          * Texto descriptivo del mensaje del body que va en la parte superior del mismo.
+         */
+        "bodyDescriptionTop": string;
         /**
           * Texto del label asociado al button de cancelar el envío del archivo.
          */
@@ -330,9 +334,13 @@ declare namespace LocalJSX {
     }
     interface MatefunModalEnviarArchivo {
         /**
-          * Texto descriptivo del mensaje del body.
+          * Texto descriptivo del mensaje del body que va en la parte inferior del mismo.
          */
-        "bodyDescription"?: string;
+        "bodyDescriptionBottom"?: string;
+        /**
+          * Texto descriptivo del mensaje del body que va en la parte superior del mismo.
+         */
+        "bodyDescriptionTop"?: string;
         /**
           * Texto del label asociado al button de cancelar el envío del archivo.
          */

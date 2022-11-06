@@ -7,9 +7,16 @@ import { Component, Event, EventEmitter, Host, Prop, h } from "@stencil/core";
 })
 export class ModalEnviarArchivo {
   /**
-   * Texto descriptivo del mensaje del body.
+   * Texto descriptivo del mensaje del body que va en la parte inferior del
+   * mismo.
    */
-  @Prop() bodyDescription: string;
+  @Prop() bodyDescriptionBottom: string;
+
+  /**
+   * Texto descriptivo del mensaje del body que va en la parte superior del
+   * mismo.
+   */
+  @Prop() bodyDescriptionTop: string;
 
   /**
    * Texto del label asociado al button de cancelar el envío del archivo.
@@ -59,9 +66,12 @@ export class ModalEnviarArchivo {
             {this.header}
           </h4>
 
-          <span slot="body" class="stretch-width">
-            {this.bodyDescription}
-          </span>
+          <div slot="body" class="stretch-width">
+            {this.bodyDescriptionTop}
+            <br />
+
+            <span class="matefun-underline">{this.bodyDescriptionBottom}</span>
+          </div>
 
           <button
             slot="primary-action"

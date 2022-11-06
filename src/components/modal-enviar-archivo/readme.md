@@ -7,13 +7,14 @@
 
 ## Properties
 
-| Property          | Attribute          | Description                                                           | Type      | Default     |
-| ----------------- | ------------------ | --------------------------------------------------------------------- | --------- | ----------- |
-| `bodyDescription` | `body-description` | Texto descriptivo del mensaje del body.                               | `string`  | `undefined` |
-| `cancelLabel`     | `cancel-label`     | Texto del label asociado al button de cancelar el envío del archivo.  | `string`  | `undefined` |
-| `confirmLabel`    | `confirm-label`    | Texto del label asociado al button de confirmar el envío del archivo. | `string`  | `undefined` |
-| `header`          | `header`           | El título del modal.                                                  | `string`  | `undefined` |
-| `opened`          | `opened`           | `true` si el modal está abierto.                                      | `boolean` | `false`     |
+| Property                | Attribute                 | Description                                                                   | Type      | Default     |
+| ----------------------- | ------------------------- | ----------------------------------------------------------------------------- | --------- | ----------- |
+| `bodyDescriptionBottom` | `body-description-bottom` | Texto descriptivo del mensaje del body que va en la parte inferior del mismo. | `string`  | `undefined` |
+| `bodyDescriptionTop`    | `body-description-top`    | Texto descriptivo del mensaje del body que va en la parte superior del mismo. | `string`  | `undefined` |
+| `cancelLabel`           | `cancel-label`            | Texto del label asociado al button de cancelar el envío del archivo.          | `string`  | `undefined` |
+| `confirmLabel`          | `confirm-label`           | Texto del label asociado al button de confirmar el envío del archivo.         | `string`  | `undefined` |
+| `header`                | `header`                  | El título del modal.                                                          | `string`  | `undefined` |
+| `opened`                | `opened`                  | `true` si el modal está abierto.                                              | `boolean` | `false`     |
 
 
 ## Events

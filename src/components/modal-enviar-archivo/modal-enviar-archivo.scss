@@ -1,6 +1,13 @@
 matefun-modal-enviar-archivo {
   .stretch-width {
     width: 100%;
+    white-space: pre-wrap;
+  }
+
+  .matefun-underline {
+    display: block;
+    margin-top: 4px;
+    text-decoration: underline;
   }
 
   .matefun-send-file {

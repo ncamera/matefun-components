@@ -111,7 +111,6 @@ export class Modal {
 
   componentWillLoad() {
     this.presented = this.opened;
-    console.log("Hola", this.presented);
   }
 
   componentDidLoad() {

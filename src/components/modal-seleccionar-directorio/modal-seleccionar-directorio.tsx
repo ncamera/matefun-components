@@ -38,6 +38,13 @@ export class ModalSeleccionarDirectorio {
   @Prop() fileContent: string;
 
   /**
+   * Id del archivo a mover. Esta propiedad solo aplica cuando
+   * `typeOfModal` == `"move"`, y permite evitar mover una carpeta para algunos
+   * de sus subdirectorios, evitando así un ciclo en el árbol de directorios.
+   */
+  @Prop() fileIdToMove: number = -1;
+
+  /**
    * Texto del label asociado al input para ingresar el nombre del nuevo archivo.
    */
   @Prop() fileNameLabel: string;
@@ -78,7 +85,8 @@ export class ModalSeleccionarDirectorio {
   @Prop() rootDirectory: Archivo = null;
 
   /**
-   * Se dispara cuando se confirma la creación del archivo en el directorio actual.
+   * Se dispara cuando se confirma la operación de crear o mover el archivo
+   * sobre el directorio actual.
    */
   @Event() confirmFileCreation: EventEmitter<any>;
 
@@ -127,19 +135,28 @@ export class ModalSeleccionarDirectorio {
   };
 
   /**
-   * Emite el evento de confirmación del archivo creado, retornando el nombre
-   * de archivo y su directorio padre a agregar.
+   * Emite el evento de confirmación del archivo a crear o mover.
+   *  - Si el archivo se debe crear, se retorna el nombre del archivo y el ID
+   *    del directorio padre del archivo a crear.
+   *  - Si el archivo se debe mover, se retorna el ID del directorio padre a
+   *    donde se desea mover el archivo.
    */
   private confirmFile = () => {
-    this.confirmFileCreation.emit({
-      nombre: this.fileNameToAdd,
-      padreId: this.rootDirectory.id
-    });
+    const detail =
+      this.typeOfModal == "add"
+        ? {
+            nombre: this.fileNameToAdd,
+            padreId: this.rootDirectory.id
+          }
+        : {
+            padreId: this.rootDirectory.id
+          };
+
+    this.confirmFileCreation.emit(detail);
   };
 
-  private esDirectorio = (file: Archivo) => {
-    return file.directorio;
-  };
+  private esDirectorio = (file: Archivo) =>
+    file.directorio && this.fileIdToMove != file.padreId;
 
   componentWillLoad() {
     this.currentPath = this.initialPath;
@@ -178,8 +195,13 @@ export class ModalSeleccionarDirectorio {
                   <button
                     key={file.id} // Necesario para evitar optimizaciones no deseadas de StencilJS
                     type="button"
+                    disabled={file.id == this.fileIdToMove}
                     class="list-group-item list-group-item-action"
-                    onClick={this.navigateToDirectory(file)}
+                    onClick={
+                      file.id !== this.fileIdToMove
+                        ? this.navigateToDirectory(file)
+                        : undefined // No se agrega un handler si el directorio es el que se está moviendo
+                    }
                   >
                     <i
                       aria-hidden="true"
@@ -215,7 +237,8 @@ export class ModalSeleccionarDirectorio {
             type="button"
             class="btn btn-primary"
             disabled={
-              this.fileNameIsEmpty || (this.import && this.fileContent == "")
+              this.typeOfModal == "add" &&
+              (this.fileNameIsEmpty || (this.import && this.fileContent == ""))
             }
             onClick={this.confirmFile}
           >

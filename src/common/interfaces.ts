@@ -35,3 +35,10 @@ export interface Archivo {
    */
   padreId: number;
 }
+
+export interface Grupo {
+  anio: number;
+  grado: number;
+  grupo: string;
+  liceoId: number;
+}

@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Archivo } from "./common/interfaces";
+import { Archivo, Grupo } from "./common/interfaces";
 export namespace Components {
     interface MatefunModal {
         /**
@@ -50,6 +50,24 @@ export namespace Components {
           * Texto del label asociado al button de confirmar la creación del archivo.
          */
         "confirmLabel": string;
+        /**
+          * El título del modal.
+         */
+        "header": string;
+        /**
+          * `true` si el modal está abierto.
+         */
+        "opened": boolean;
+    }
+    interface MatefunModalCompartirArchivo {
+        /**
+          * Texto del label asociado al button de confirmar la creación del archivo.
+         */
+        "confirmLabel": string;
+        /**
+          * Grupos a los cuales se les puede compartir el archivo selecciondo.
+         */
+        "groups": Grupo[];
         /**
           * El título del modal.
          */
@@ -135,6 +153,10 @@ export interface MatefunModalBorrarArchivoCustomEvent<T> extends CustomEvent<T> 
     detail: T;
     target: HTMLMatefunModalBorrarArchivoElement;
 }
+export interface MatefunModalCompartirArchivoCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMatefunModalCompartirArchivoElement;
+}
 export interface MatefunModalNuevoArchivoCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMatefunModalNuevoArchivoElement;
@@ -156,6 +178,12 @@ declare global {
         prototype: HTMLMatefunModalBorrarArchivoElement;
         new (): HTMLMatefunModalBorrarArchivoElement;
     };
+    interface HTMLMatefunModalCompartirArchivoElement extends Components.MatefunModalCompartirArchivo, HTMLStencilElement {
+    }
+    var HTMLMatefunModalCompartirArchivoElement: {
+        prototype: HTMLMatefunModalCompartirArchivoElement;
+        new (): HTMLMatefunModalCompartirArchivoElement;
+    };
     interface HTMLMatefunModalNuevoArchivoElement extends Components.MatefunModalNuevoArchivo, HTMLStencilElement {
     }
     var HTMLMatefunModalNuevoArchivoElement: {
@@ -171,6 +199,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "matefun-modal": HTMLMatefunModalElement;
         "matefun-modal-borrar-archivo": HTMLMatefunModalBorrarArchivoElement;
+        "matefun-modal-compartir-archivo": HTMLMatefunModalCompartirArchivoElement;
         "matefun-modal-nuevo-archivo": HTMLMatefunModalNuevoArchivoElement;
         "matefun-modal-seleccionar-directorio": HTMLMatefunModalSeleccionarDirectorioElement;
     }
@@ -239,6 +268,28 @@ declare namespace LocalJSX {
           * Se dispara cuando se confirma la eliminación del archivo del directorio actual.
          */
         "onRemoveFile"?: (event: MatefunModalBorrarArchivoCustomEvent<any>) => void;
+        /**
+          * `true` si el modal está abierto.
+         */
+        "opened"?: boolean;
+    }
+    interface MatefunModalCompartirArchivo {
+        /**
+          * Texto del label asociado al button de confirmar la creación del archivo.
+         */
+        "confirmLabel"?: string;
+        /**
+          * Grupos a los cuales se les puede compartir el archivo selecciondo.
+         */
+        "groups"?: Grupo[];
+        /**
+          * El título del modal.
+         */
+        "header"?: string;
+        /**
+          * Se dispara cuando se confirma la operación de compartir el archivo con el grupo seleccionado.
+         */
+        "onConfirmFileShare"?: (event: MatefunModalCompartirArchivoCustomEvent<any>) => void;
         /**
           * `true` si el modal está abierto.
          */
@@ -330,6 +381,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "matefun-modal": MatefunModal;
         "matefun-modal-borrar-archivo": MatefunModalBorrarArchivo;
+        "matefun-modal-compartir-archivo": MatefunModalCompartirArchivo;
         "matefun-modal-nuevo-archivo": MatefunModalNuevoArchivo;
         "matefun-modal-seleccionar-directorio": MatefunModalSeleccionarDirectorio;
     }
@@ -340,6 +392,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "matefun-modal": LocalJSX.MatefunModal & JSXBase.HTMLAttributes<HTMLMatefunModalElement>;
             "matefun-modal-borrar-archivo": LocalJSX.MatefunModalBorrarArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalBorrarArchivoElement>;
+            "matefun-modal-compartir-archivo": LocalJSX.MatefunModalCompartirArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalCompartirArchivoElement>;
             "matefun-modal-nuevo-archivo": LocalJSX.MatefunModalNuevoArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalNuevoArchivoElement>;
             "matefun-modal-seleccionar-directorio": LocalJSX.MatefunModalSeleccionarDirectorio & JSXBase.HTMLAttributes<HTMLMatefunModalSeleccionarDirectorioElement>;
         }

@@ -1,0 +1,15 @@
+button {
+  cursor: pointer;
+}
+
+matefun-modal-compartir-archivo {
+  .stretch-width {
+    width: 100%;
+    min-height: 275px; // Para evitar un poco el CLS se fija un min-height
+  }
+
+  .matefun-group {
+    margin-right: 10px;
+    font-size: 3em;
+  }
+}

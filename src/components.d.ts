@@ -170,6 +170,44 @@ export namespace Components {
          */
         "typeOfModal": "add" | "move";
     }
+    interface MatefunModalVerCalificacion {
+        /**
+          * Texto del label asociado al button de confirmar cerrar el modal.
+         */
+        "confirmLabel": string;
+        /**
+          * Texto descriptivo del mensaje del body que va en la fecha.
+         */
+        "date": string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el label de la fecha.
+         */
+        "dateLabel": string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el detalle.
+         */
+        "detail": string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el label del detalle.
+         */
+        "detailLabel": string;
+        /**
+          * El título del modal.
+         */
+        "header": string;
+        /**
+          * `true` si el modal está abierto.
+         */
+        "opened": boolean;
+        /**
+          * Texto descriptivo del mensaje del body que va en el puntaje.
+         */
+        "score": string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el label del puntaje.
+         */
+        "scoreLabel": string;
+    }
 }
 export interface MatefunModalCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -194,6 +232,10 @@ export interface MatefunModalNuevoArchivoCustomEvent<T> extends CustomEvent<T> {
 export interface MatefunModalSeleccionarDirectorioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMatefunModalSeleccionarDirectorioElement;
+}
+export interface MatefunModalVerCalificacionCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMatefunModalVerCalificacionElement;
 }
 declare global {
     interface HTMLMatefunModalElement extends Components.MatefunModal, HTMLStencilElement {
@@ -232,6 +274,12 @@ declare global {
         prototype: HTMLMatefunModalSeleccionarDirectorioElement;
         new (): HTMLMatefunModalSeleccionarDirectorioElement;
     };
+    interface HTMLMatefunModalVerCalificacionElement extends Components.MatefunModalVerCalificacion, HTMLStencilElement {
+    }
+    var HTMLMatefunModalVerCalificacionElement: {
+        prototype: HTMLMatefunModalVerCalificacionElement;
+        new (): HTMLMatefunModalVerCalificacionElement;
+    };
     interface HTMLElementTagNameMap {
         "matefun-modal": HTMLMatefunModalElement;
         "matefun-modal-borrar-archivo": HTMLMatefunModalBorrarArchivoElement;
@@ -239,6 +287,7 @@ declare global {
         "matefun-modal-enviar-archivo": HTMLMatefunModalEnviarArchivoElement;
         "matefun-modal-nuevo-archivo": HTMLMatefunModalNuevoArchivoElement;
         "matefun-modal-seleccionar-directorio": HTMLMatefunModalSeleccionarDirectorioElement;
+        "matefun-modal-ver-calificacion": HTMLMatefunModalVerCalificacionElement;
     }
 }
 declare namespace LocalJSX {
@@ -449,6 +498,48 @@ declare namespace LocalJSX {
          */
         "typeOfModal"?: "add" | "move";
     }
+    interface MatefunModalVerCalificacion {
+        /**
+          * Texto del label asociado al button de confirmar cerrar el modal.
+         */
+        "confirmLabel"?: string;
+        /**
+          * Texto descriptivo del mensaje del body que va en la fecha.
+         */
+        "date"?: string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el label de la fecha.
+         */
+        "dateLabel"?: string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el detalle.
+         */
+        "detail"?: string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el label del detalle.
+         */
+        "detailLabel"?: string;
+        /**
+          * El título del modal.
+         */
+        "header"?: string;
+        /**
+          * Se dispara cuando se confirma el cerrado del modal.
+         */
+        "onConfirmClose"?: (event: MatefunModalVerCalificacionCustomEvent<any>) => void;
+        /**
+          * `true` si el modal está abierto.
+         */
+        "opened"?: boolean;
+        /**
+          * Texto descriptivo del mensaje del body que va en el puntaje.
+         */
+        "score"?: string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el label del puntaje.
+         */
+        "scoreLabel"?: string;
+    }
     interface IntrinsicElements {
         "matefun-modal": MatefunModal;
         "matefun-modal-borrar-archivo": MatefunModalBorrarArchivo;
@@ -456,6 +547,7 @@ declare namespace LocalJSX {
         "matefun-modal-enviar-archivo": MatefunModalEnviarArchivo;
         "matefun-modal-nuevo-archivo": MatefunModalNuevoArchivo;
         "matefun-modal-seleccionar-directorio": MatefunModalSeleccionarDirectorio;
+        "matefun-modal-ver-calificacion": MatefunModalVerCalificacion;
     }
 }
 export { LocalJSX as JSX };
@@ -468,6 +560,7 @@ declare module "@stencil/core" {
             "matefun-modal-enviar-archivo": LocalJSX.MatefunModalEnviarArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalEnviarArchivoElement>;
             "matefun-modal-nuevo-archivo": LocalJSX.MatefunModalNuevoArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalNuevoArchivoElement>;
             "matefun-modal-seleccionar-directorio": LocalJSX.MatefunModalSeleccionarDirectorio & JSXBase.HTMLAttributes<HTMLMatefunModalSeleccionarDirectorioElement>;
+            "matefun-modal-ver-calificacion": LocalJSX.MatefunModalVerCalificacion & JSXBase.HTMLAttributes<HTMLMatefunModalVerCalificacionElement>;
         }
     }
 }

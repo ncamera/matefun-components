@@ -20,10 +20,17 @@ export class ModalSeleccionarDirectorio {
 
   private fileNameToAdd: string = "";
 
+  private reader: FileReader = new FileReader();
+
   /**
    * `true` si el input con el nombre del archivo a agregar está vacío
    */
   @State() fileNameIsEmpty: boolean = true;
+
+  /**
+   * Si `import == `true`, determina el contenido del archivo a importar.
+   */
+  @State() fileContent: string;
 
   /**
    * Texto del label asociado al button de confirmar la creación del archivo.
@@ -39,8 +46,6 @@ export class ModalSeleccionarDirectorio {
    * Path (ruta) inicial en donde se encuentra el directorio indicado por la propiedad `currentDirectory`.
    */
   @Prop() initialPath: string = "/";
-
-  @Prop() fileContent: string;
 
   /**
    * Id del archivo a mover. Esta propiedad solo aplica cuando
@@ -145,6 +150,7 @@ export class ModalSeleccionarDirectorio {
     const detail =
       this.typeOfModal == "add"
         ? {
+            fileContent: this.fileContent,
             nombre: this.fileNameToAdd,
             padreId: this.currentDirectory.id
           }
@@ -158,8 +164,26 @@ export class ModalSeleccionarDirectorio {
   private esDirectorio = (file: Archivo) =>
     file.directorio && this.fileIdToMove != file.padreId;
 
+  private fileSelectedChange = (event: UIEvent) => {
+    const file: File = (event.target as HTMLInputElement).files[0];
+
+    // Se lee el archivo
+    if (file) {
+      this.reader.readAsText(file);
+    }
+  };
+
   componentWillLoad() {
     this.currentPath = this.initialPath;
+  }
+
+  componentDidLoad() {
+    // Se inicializa el callback para leer contenido de archivos
+    if (this.import) {
+      this.reader.onloadend = () => {
+        this.fileContent = this.reader.result as string;
+      };
+    }
   }
 
   render() {
@@ -173,15 +197,32 @@ export class ModalSeleccionarDirectorio {
           <div slot="body" class="stretch-width">
             {this.typeOfModal == "add" && (
               <div class="form-group">
-                <label htmlfor="file-name" class="form-control-label">
+                <label htmlfor="matefun-file-name" class="form-control-label">
                   {this.fileNameLabel}
                 </label>
                 <input
-                  id="file-name"
+                  id="matefun-file-name"
                   type="text"
                   class="form-control"
                   value=""
                   onInput={this.updateFileName}
+                />
+              </div>
+            )}
+
+            {this.import && (
+              <div class="form-group">
+                <label
+                  htmlFor="matefun-file-import"
+                  class="form-control-label matefun-import"
+                >
+                  {this.importLabel}
+                </label>
+                <input
+                  id="matefun-file-import"
+                  role="button"
+                  type="file"
+                  onChange={this.fileSelectedChange}
                 />
               </div>
             )}
@@ -216,20 +257,6 @@ export class ModalSeleccionarDirectorio {
                   </button>
                 ))}
             </div>
-
-            {this.import && (
-              <div class="form-group">
-                <label htmlFor="file-name" class="form-control-label">
-                  {this.importLabel}
-                </label>
-                <input
-                  id="fileid"
-                  type="file"
-                  // (change)="changeListener($event)"
-                  // #input
-                />
-              </div>
-            )}
           </div>
 
           <button
@@ -238,7 +265,7 @@ export class ModalSeleccionarDirectorio {
             class="btn btn-primary"
             disabled={
               this.typeOfModal == "add" &&
-              (this.fileNameIsEmpty || (this.import && this.fileContent == ""))
+              (this.fileNameIsEmpty || (this.import && !this.fileContent))
             }
             onClick={this.confirmFile}
           >

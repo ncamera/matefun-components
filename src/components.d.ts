@@ -138,7 +138,6 @@ export namespace Components {
           * Directorio actual sobre el cual se están visualizando sus archivos.
          */
         "currentDirectory": Archivo;
-        "fileContent": string;
         /**
           * Id del archivo a mover. Esta propiedad solo aplica cuando `typeOfModal` == `"move"`, y permite evitar mover una carpeta para algunos de sus subdirectorios, evitando así un ciclo en el árbol de directorios.
          */
@@ -454,7 +453,6 @@ declare namespace LocalJSX {
           * Directorio actual sobre el cual se están visualizando sus archivos.
          */
         "currentDirectory"?: Archivo;
-        "fileContent"?: string;
         /**
           * Id del archivo a mover. Esta propiedad solo aplica cuando `typeOfModal` == `"move"`, y permite evitar mover una carpeta para algunos de sus subdirectorios, evitando así un ciclo en el árbol de directorios.
          */

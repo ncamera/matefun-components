@@ -5,6 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Status } from "./components/modal-calificar-entrega/modal-calificar-entrega";
 import { Archivo, Grupo } from "./common/interfaces";
 export namespace Components {
     interface MatefunModal {
@@ -58,6 +59,52 @@ export namespace Components {
           * `true` si el modal está abierto.
          */
         "opened": boolean;
+    }
+    interface MatefunModalCalificarEntrega {
+        /**
+          * Texto del label asociado al button de cancelar el envío del archivo.
+         */
+        "cancelLabel": string;
+        /**
+          * Texto del label asociado al button de confirmar el envío del archivo.
+         */
+        "confirmLabel": string;
+        /**
+          * Descripción asociada a la entrega, en caso de que ya haya sido calificada previamente.
+         */
+        "detail": string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el label del detalle.
+         */
+        "detailLabel": string;
+        /**
+          * El título del modal.
+         */
+        "header": string;
+        /**
+          * `true` si el modal está abierto.
+         */
+        "opened": boolean;
+        /**
+          * Arreglos de posibles estados de la entrega
+         */
+        "posibleStatuses": Status[];
+        /**
+          * Puntaje asociado a la entrega, en caso de que ya haya sido calificada previamente.
+         */
+        "score": string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el label del puntaje.
+         */
+        "scoreLabel": string;
+        /**
+          * Estado asociado a la entrega, en caso de que ya haya sido calificada previamente.
+         */
+        "status": string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el label del estado de la entrega.
+         */
+        "statusLabel": string;
     }
     interface MatefunModalCompartirArchivo {
         /**
@@ -216,6 +263,10 @@ export interface MatefunModalBorrarArchivoCustomEvent<T> extends CustomEvent<T> 
     detail: T;
     target: HTMLMatefunModalBorrarArchivoElement;
 }
+export interface MatefunModalCalificarEntregaCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLMatefunModalCalificarEntregaElement;
+}
 export interface MatefunModalCompartirArchivoCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLMatefunModalCompartirArchivoElement;
@@ -248,6 +299,12 @@ declare global {
     var HTMLMatefunModalBorrarArchivoElement: {
         prototype: HTMLMatefunModalBorrarArchivoElement;
         new (): HTMLMatefunModalBorrarArchivoElement;
+    };
+    interface HTMLMatefunModalCalificarEntregaElement extends Components.MatefunModalCalificarEntrega, HTMLStencilElement {
+    }
+    var HTMLMatefunModalCalificarEntregaElement: {
+        prototype: HTMLMatefunModalCalificarEntregaElement;
+        new (): HTMLMatefunModalCalificarEntregaElement;
     };
     interface HTMLMatefunModalCompartirArchivoElement extends Components.MatefunModalCompartirArchivo, HTMLStencilElement {
     }
@@ -282,6 +339,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "matefun-modal": HTMLMatefunModalElement;
         "matefun-modal-borrar-archivo": HTMLMatefunModalBorrarArchivoElement;
+        "matefun-modal-calificar-entrega": HTMLMatefunModalCalificarEntregaElement;
         "matefun-modal-compartir-archivo": HTMLMatefunModalCompartirArchivoElement;
         "matefun-modal-enviar-archivo": HTMLMatefunModalEnviarArchivoElement;
         "matefun-modal-nuevo-archivo": HTMLMatefunModalNuevoArchivoElement;
@@ -357,6 +415,60 @@ declare namespace LocalJSX {
           * `true` si el modal está abierto.
          */
         "opened"?: boolean;
+    }
+    interface MatefunModalCalificarEntrega {
+        /**
+          * Texto del label asociado al button de cancelar el envío del archivo.
+         */
+        "cancelLabel"?: string;
+        /**
+          * Texto del label asociado al button de confirmar el envío del archivo.
+         */
+        "confirmLabel"?: string;
+        /**
+          * Descripción asociada a la entrega, en caso de que ya haya sido calificada previamente.
+         */
+        "detail"?: string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el label del detalle.
+         */
+        "detailLabel"?: string;
+        /**
+          * El título del modal.
+         */
+        "header"?: string;
+        /**
+          * Se dispara cuando se cancela la calificación del archivo.
+         */
+        "onCancelAction"?: (event: MatefunModalCalificarEntregaCustomEvent<any>) => void;
+        /**
+          * Se dispara cuando se confirma la calificación del archivo.
+         */
+        "onConfirmFileQualify"?: (event: MatefunModalCalificarEntregaCustomEvent<any>) => void;
+        /**
+          * `true` si el modal está abierto.
+         */
+        "opened"?: boolean;
+        /**
+          * Arreglos de posibles estados de la entrega
+         */
+        "posibleStatuses"?: Status[];
+        /**
+          * Puntaje asociado a la entrega, en caso de que ya haya sido calificada previamente.
+         */
+        "score"?: string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el label del puntaje.
+         */
+        "scoreLabel"?: string;
+        /**
+          * Estado asociado a la entrega, en caso de que ya haya sido calificada previamente.
+         */
+        "status"?: string;
+        /**
+          * Texto descriptivo del mensaje del body que va en el label del estado de la entrega.
+         */
+        "statusLabel"?: string;
     }
     interface MatefunModalCompartirArchivo {
         /**
@@ -541,6 +653,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "matefun-modal": MatefunModal;
         "matefun-modal-borrar-archivo": MatefunModalBorrarArchivo;
+        "matefun-modal-calificar-entrega": MatefunModalCalificarEntrega;
         "matefun-modal-compartir-archivo": MatefunModalCompartirArchivo;
         "matefun-modal-enviar-archivo": MatefunModalEnviarArchivo;
         "matefun-modal-nuevo-archivo": MatefunModalNuevoArchivo;
@@ -554,6 +667,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "matefun-modal": LocalJSX.MatefunModal & JSXBase.HTMLAttributes<HTMLMatefunModalElement>;
             "matefun-modal-borrar-archivo": LocalJSX.MatefunModalBorrarArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalBorrarArchivoElement>;
+            "matefun-modal-calificar-entrega": LocalJSX.MatefunModalCalificarEntrega & JSXBase.HTMLAttributes<HTMLMatefunModalCalificarEntregaElement>;
             "matefun-modal-compartir-archivo": LocalJSX.MatefunModalCompartirArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalCompartirArchivoElement>;
             "matefun-modal-enviar-archivo": LocalJSX.MatefunModalEnviarArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalEnviarArchivoElement>;
             "matefun-modal-nuevo-archivo": LocalJSX.MatefunModalNuevoArchivo & JSXBase.HTMLAttributes<HTMLMatefunModalNuevoArchivoElement>;

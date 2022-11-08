@@ -42,6 +42,7 @@
 ### Used by
 
  - [matefun-modal-borrar-archivo](../modal-borrar-archivo)
+ - [matefun-modal-calificar-entrega](../modal-calificar-entrega)
  - [matefun-modal-compartir-archivo](../modal-compartir-archivo)
  - [matefun-modal-enviar-archivo](../modal-enviar-archivo)
  - [matefun-modal-nuevo-archivo](../modal-nuevo-archivo)
@@ -52,6 +53,7 @@
 ```mermaid
 graph TD;
   matefun-modal-borrar-archivo --> matefun-modal
+  matefun-modal-calificar-entrega --> matefun-modal
   matefun-modal-compartir-archivo --> matefun-modal
   matefun-modal-enviar-archivo --> matefun-modal
   matefun-modal-nuevo-archivo --> matefun-modal
